@@ -8,31 +8,73 @@
           </label>                  
       </el-header>
       <el-main>
-        <template>          
-          <el-row :gutter="20" type="flex" >
-            <el-col :span="6">
-              <el-input
-                placeholder="請輸入藥局名稱"
-                prefix-icon="el-icon-search"
-                v-model="filter.Name">
-              </el-input>
-            </el-col>
+        <template>        
+          <!-- PC   -->
+          <div class="hidden-sm-and-down" >
+            <el-row :gutter="10" type="flex" >
+              <el-col :span="6">
+                <el-input
+                  placeholder="請輸入藥局名稱"
+                  prefix-icon="el-icon-search"
+                  v-model="filter.Name">
+                </el-input>
+              </el-col>
+  
+              <el-col :span="6">
+                <el-input
+                  placeholder="請選擇地點"
+                  prefix-icon="el-icon-search"
+                  v-model="filter.Area"
+                  :disabled="isUseCurrentLocationQuery">
+                  <template slot="append"><el-button class="el-icon-map-location" @click="useCurrentLocation"></el-button></template>
+                </el-input>
+              </el-col>
+  
+              <el-col :span="3">
+                <el-checkbox v-model="filter.HaveAdultMask" label="成人口罩" border></el-checkbox>
+              </el-col>
 
-            <el-col :span="6">
-              <el-input
-                placeholder="請選擇地點"
-                prefix-icon="el-icon-search"
-                v-model="filter.Area"
-                :disabled="isUseCurrentLocationQuery">
-                <template slot="append"><el-button class="el-icon-map-location" @click="useCurrentLocation"></el-button></template>
-              </el-input>
-            </el-col>
+              <el-col :span="3">
+                <el-checkbox v-model="filter.HaveChildMask" label="兒童口罩" border></el-checkbox>
+              </el-col>
+  
+            </el-row>
+          </div>
 
-            <el-col :span="3">
-              <el-checkbox v-model="filter.HaveMask" label="仍有口罩" border></el-checkbox>
-            </el-col>
-
-          </el-row>
+          <!-- Mobile -->
+          <div class="hidden-sm-and-up">
+            <el-row >
+              <el-col :span="24">
+                <el-input
+                  placeholder="請輸入藥局名稱"
+                  prefix-icon="el-icon-search"
+                  v-model="filter.Name">
+                </el-input>
+              </el-col>
+            </el-row>
+            
+            <el-row >
+              <el-col :span="24">
+                <el-input
+                  placeholder="請選擇地點"
+                  prefix-icon="el-icon-search"
+                  v-model="filter.Area"
+                  :disabled="isUseCurrentLocationQuery">
+                  <template slot="append"><el-button class="el-icon-map-location" @click="useCurrentLocation"></el-button></template>
+                </el-input>
+              </el-col>
+            </el-row>
+              
+            <el-row :gutter="10">
+              <el-col :span="10">
+                <el-checkbox v-model="filter.HaveAdultMask" label="成人口罩" border></el-checkbox>
+              </el-col>
+              <el-col :span="10">
+                <el-checkbox v-model="filter.HaveChildMask" label="兒童口罩" border></el-checkbox>
+              </el-col>              
+            </el-row>
+          </div>
+          
 
           <el-row :gutter="20" >
             <el-button :disabled="isLoading" type="primary" icon="el-icon-search" round @click="query" >查詢</el-button>
@@ -40,13 +82,17 @@
         </template>
 
         <!-- 分隔線 -->
-        <el-divider></el-divider>
+        <el-divider></el-divider>        
 
+        <div style="text-align: left;">
+          <span v-show="isUseCurrentLocationQuery">顯示距離當前位置{{ distanceKM }}公里藥局</span>
+        </div>
+        
         <div           
           v-loading="isLoading"                  
           v-infinite-scroll="showmore"
           infinite-scroll-disabled="disabledLoadingMoreData"
-        >
+        >            
             <InfoCard
               v-for="(item, index) in listDataSource"               
               :key="index"
@@ -77,13 +123,14 @@
       return {
         filter: {
           Name: '',
-          Area: '',
-          HaveMask: false,
+          Area: '',         
+          HaveAdultMask: false,
+          HaveChildMask: false,
+          IsOpen: false,
           PageIndex: 1,
           PageSize: 10
         },
         currentLocation: null,
-        areaList: [],
         isAreaLoading: false,
         dataSource: [],
         listDataSource: [],
@@ -108,6 +155,11 @@
         return this.noMoreData || this.isLoading
       }
     },
+    watch: {
+      isUseCurrentLocationQuery: function(value) {
+        this.filter.Area = value ? '目前所在位置' : ''
+      }  
+    },
     mounted() {
       this.init()      
     },
@@ -115,28 +167,22 @@
       init() {
         let self = this        
 
-        this.areaList = ["台北市","基隆市","新北市","連江縣","宜蘭縣","新竹市","新竹縣","桃園市","苗栗縣","台中市","彰化縣","南投縣","嘉義市","嘉義縣","雲林縣","台南市","高雄市","澎湖縣","金門縣","屏東縣","台東縣","花蓮縣"]
-
-        // // 取得當前座標
-        // this.$getLocation()
-        // .then(coordinates => {
-        //   console.log(coordinates)
-        //   self.currentLocation = coordinates
-        // });
-
         // 取得當前座標
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition( (pos) => 
           {
-            console.log('pos', pos)
+            // console.log('pos', pos)
+            // 預設使用當前位置查詢            
             self.currentLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }
+            self.isUseCurrentLocationQuery = true
+            self.query()
           }, (err) => 
           {
             console.log(err)
           });
         } else {
           // this.getCity();
-          console.log('google location error');
+          console.log('google location error')
         }
 
       },
@@ -153,7 +199,7 @@
         .then(function (response) {
           
           self.dataSource = self.filterData(response.data.features)
-          console.log(self.dataSource)
+          // console.log(self.dataSource)
           self.dataBind()   
         })        
         .catch(function (error) {
@@ -181,7 +227,8 @@
 
           return  areaValid
                   && ( self.filter.Name === '' || dragInfo.name.includes(self.filter.Name) )                   
-                  && ( !self.filter.HaveMask || dragInfo.mask_adult + dragInfo.mask_child > 0)
+                  && ( !self.filter.HaveAdultMask || dragInfo.mask_adult > 0)
+                  && ( !self.filter.HaveChildMask || dragInfo.mask_child > 0)
         })
 
         if (self.isUseCurrentLocationQuery) {
@@ -204,12 +251,11 @@
           this.dataBind()
         }
 
-        console.log('showmore', this.filter.PageIndex)
+        // console.log('showmore', this.filter.PageIndex)
       },
       // 是否使用當前位置查詢
       useCurrentLocation(){
-        this.isUseCurrentLocationQuery = !this.isUseCurrentLocationQuery
-        this.filter.Area = this.isUseCurrentLocationQuery ? '目前所在位置' : ''        
+        this.isUseCurrentLocationQuery = !this.isUseCurrentLocationQuery                
       },
       showMaskInfo(){
         this.dialogVisible = true
@@ -233,10 +279,6 @@
     color: #333;
     text-align: center;
     line-height: 60px;
-
-    /* position: absolute;
-    width: 100%;
-    top: 0; */
   }
 
   .el-footer {
@@ -244,10 +286,6 @@
     color: #333;
     text-align: center;
     line-height: 60px;
-
-    /* position: absolute;
-    width: 100%;
-    bottom: 0; */
   }
     
   
