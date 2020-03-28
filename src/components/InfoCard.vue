@@ -1,97 +1,159 @@
 <template>
-  <el-card class="box-card" shadow="hover" :body-style="{ padding: '10px' }">
+  <el-card
+    class="box-card"
+    shadow="hover"
+    :body-style="{ padding: '10px' }"
+  >
     <!-- PC -->
-    <div  class="clearfix box-card-content hidden-sm-and-down" >
-
+    <div class="clearfix box-card-content hidden-sm-and-down">
       <!-- 藥局名稱 -->      
       <span style="font-size: xx-large;">{{ bindingData.name }}</span>
-      <i v-show="moringOpen" style="font-size: x-large;" class="el-icon-sunrise"></i>
-      <i v-show="afternoonOpen" style="font-size: x-large;" class="el-icon-sunny"></i>
-      <i v-show="nightOpen" style="font-size: x-large;" class="el-icon-moon"></i>
+      <i
+        v-show="moringOpen"
+        style="font-size: x-large;"
+        class="el-icon-sunrise"
+      />
+      <i
+        v-show="afternoonOpen"
+        style="font-size: x-large;"
+        class="el-icon-sunny"
+      />
+      <i
+        v-show="nightOpen"
+        style="font-size: x-large;"
+        class="el-icon-moon"
+      />
       
       <div style="float: right; padding: 10px 0">
-        <el-badge style="margin-right: 25px;" :value="bindingData.mask_adult" :max="999" :type="maskCountAlert(bindingData.mask_adult)">
-          <el-tag :type="maskCountAlert(bindingData.mask_adult)">成人口罩</el-tag>
+        <el-badge
+          style="margin-right: 25px;"
+          :value="bindingData.mask_adult"
+          :max="999"
+          :type="maskCountAlert(bindingData.mask_adult)"
+        >
+          <el-tag :type="maskCountAlert(bindingData.mask_adult)">
+            成人口罩
+          </el-tag>
         </el-badge>        
       
-        <el-badge style="margin-right: 15px;" :value="bindingData.mask_child" :max="999" :type="maskCountAlert(bindingData.mask_child)">
-          <el-tag :type="maskCountAlert(bindingData.mask_child)">兒童口罩</el-tag>
+        <el-badge
+          style="margin-right: 15px;"
+          :value="bindingData.mask_child"
+          :max="999"
+          :type="maskCountAlert(bindingData.mask_child)"
+        >
+          <el-tag :type="maskCountAlert(bindingData.mask_child)">
+            兒童口罩
+          </el-tag>
         </el-badge>
       </div>
       
       <!-- 分隔線 -->
-      <el-divider></el-divider>
+      <el-divider />
       
       <!-- 簡易資訊 -->
       <div class="simpleInfo">        
         <el-row :gutter="20">
           <el-col :span="16">
-            <el-link :href="mapUrl" target="_blank"><i  class="el-icon-location-outline"></i> {{ address }} </el-link>
+            <el-link
+              :href="mapUrl"
+              target="_blank"
+            >
+              <i class="el-icon-location-outline" /> {{ address }}
+            </el-link>
           </el-col>
-          <el-col :span="8" style="text-align: end;">
-            <i  class="el-icon-phone-outline"></i> {{ bindingData.phone }} 
+          <el-col
+            :span="8"
+            style="text-align: end;"
+          >
+            <i class="el-icon-phone-outline" /> {{ bindingData.phone }} 
           </el-col>
         </el-row>  
         <el-row :gutter="20">
           <el-col :span="24">
-            <i  class="el-icon-edit-outline"></i> {{ bindingData.note }} 
+            <i class="el-icon-edit-outline" /> {{ bindingData.note }} 
           </el-col>          
         </el-row>        
       </div>
-      
     </div>
     
     <!-- Mobile -->
-    <div class="clearfix box-card-content hidden-sm-and-up" >
-
+    <div class="clearfix box-card-content hidden-sm-and-up">
       <!-- 藥局名稱 -->
       <span style="font-size: xx-large;">{{ bindingData.name }}</span>
-      <i v-show="moringOpen" style="font-size: x-large;" class="el-icon-sunrise"></i>
-      <i v-show="afternoonOpen" style="font-size: x-large;" class="el-icon-sunny"></i>
-      <i v-show="nightOpen" style="font-size: x-large;" class="el-icon-moon"></i>
+      <i
+        v-show="moringOpen"
+        style="font-size: x-large;"
+        class="el-icon-sunrise"
+      />
+      <i
+        v-show="afternoonOpen"
+        style="font-size: x-large;"
+        class="el-icon-sunny"
+      />
+      <i
+        v-show="nightOpen"
+        style="font-size: x-large;"
+        class="el-icon-moon"
+      />
       
       <!-- 口罩數量 -->
       <div style="margin: 5px 0px;">
-        <el-badge style="margin-right: 30px;" :value="bindingData.mask_adult" :max="999" :type="maskCountAlert(bindingData.mask_adult)">
-          <el-tag :type="maskCountAlert(bindingData.mask_adult)">成人口罩</el-tag>
+        <el-badge
+          style="margin-right: 30px;"
+          :value="bindingData.mask_adult"
+          :max="999"
+          :type="maskCountAlert(bindingData.mask_adult)"
+        >
+          <el-tag :type="maskCountAlert(bindingData.mask_adult)">
+            成人口罩
+          </el-tag>
         </el-badge>        
       
-        <el-badge style="margin-right: 30px;" :value="bindingData.mask_child" :max="999" :type="maskCountAlert(bindingData.mask_child)">
-          <el-tag :type="maskCountAlert(bindingData.mask_child)">兒童口罩</el-tag>
+        <el-badge
+          style="margin-right: 30px;"
+          :value="bindingData.mask_child"
+          :max="999"
+          :type="maskCountAlert(bindingData.mask_child)"
+        >
+          <el-tag :type="maskCountAlert(bindingData.mask_child)">
+            兒童口罩
+          </el-tag>
         </el-badge>
       </div>
       
       <!-- 分隔線 -->
-      <el-divider></el-divider>
+      <el-divider />
       
       <!-- 簡易資訊 -->
-      <div class="simpleInfo"> 
-        
+      <div class="simpleInfo">
         <!-- 地址 -->
         <el-row>
           <el-col :span="24">
-            <el-link :href="mapUrl" target="_blank"><i  class="el-icon-location-outline"></i> {{ address }} </el-link>
+            <el-link
+              :href="mapUrl"
+              target="_blank"
+            >
+              <i class="el-icon-location-outline" /> {{ address }}
+            </el-link>
           </el-col>          
         </el-row>  
 
         <!-- 電話 -->
         <el-row>
           <el-col :span="24">
-            <i  class="el-icon-phone-outline"></i>{{ bindingData.phone }}
+            <i class="el-icon-phone-outline" />{{ bindingData.phone }}
           </el-col>
         </el-row>
 
         <!-- 備註 -->
         <el-row>
           <el-col :span="24">
-            <i  class="el-icon-edit-outline"></i> {{ bindingData.note }} 
+            <i class="el-icon-edit-outline" /> {{ bindingData.note }} 
           </el-col>          
-        </el-row>    
-
+        </el-row>
       </div>
-      
     </div>
-
   </el-card>
 </template>
 
@@ -108,6 +170,29 @@
         type: Object,
         default: () => { return {} },
         required: false
+      }
+    },
+    data: function () {
+      return {  
+        bindingData: {
+          name: '',
+          phone: '',
+          address: '',
+          mask_adult: 0,
+          mask_child: 0,
+          updated: '',
+          available: '',
+          note: '',
+          custom_note: '',
+          website: '',
+          county: '',
+          town: '',
+          cunli: '',
+          service_periods: ''
+        },
+        coordinates: [],
+        todayServicePeriods: 'NNN',
+        location: null
       }
     },
     computed: {
@@ -136,29 +221,6 @@
       },
       nightOpen: function() {
         return this.todayServicePeriods.length === 3 ? this.todayServicePeriods[2] === 'N' : false
-      }
-    },
-    data: function () {
-      return {  
-        bindingData: {
-          name: '',
-          phone: '',
-          address: '',
-          mask_adult: 0,
-          mask_child: 0,
-          updated: '',
-          available: '',
-          note: '',
-          custom_note: '',
-          website: '',
-          county: '',
-          town: '',
-          cunli: '',
-          service_periods: ''
-        },
-        coordinates: [],
-        todayServicePeriods: 'NNN',
-        location: null
       }
     },
     watch: {      

@@ -1,19 +1,19 @@
 #!/usr/bin/env sh
 
-# µ±·¢Éú´íÎóÊ±ÖÐÖ¹½Å±¾
+# ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ö¹ï¿½Å±ï¿½
 set -e
 
-# ¹¹½¨«Ø
+# ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 npm run build
 
-# cd µ½¹¹½¨Êä³öµÄÄ¿Â¼ÏÂ
+# cd ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Â¼ï¿½ï¿½
 cd dist
 
 git init
 git add -A
 git commit -m 'deploy'
 
-# ²¿Êðµ½ https://<USERNAME>.github.io/<REPO>
+# ï¿½ï¿½ï¿½ï¿½ https://<USERNAME>.github.io/<REPO>
 # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
 git push -f https://github.com/genius9450/mask-query-system.git master:gh-pages
 

@@ -14,7 +14,7 @@ const distance = {
 
     var deltaLng = this.toRad(coordinates1.lng) - this.toRad(coordinates2.lng)
 
-    var dis = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(deltaLat / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(deltaLng / 2), 2)))
+    dis = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(deltaLat / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(deltaLng / 2), 2)))
 
     return dis * 6378137
     }

@@ -1,118 +1,162 @@
 <template>  
-    <el-container>
-      <el-header>              
-          <label class="mainTitle" >罩哪裡去<i class="el-icon-info el-icon--right"></i> 
-            <div id="maskInfoImg" style="text-align: center;">
-              <img src="../assets/img/MaskInfo.png" style="width: 50%;object-fit: contain;" >
-            </div> 
-          </label>                  
-      </el-header>
-      <el-main>
-        <template>        
-          <!-- PC   -->
-          <div class="hidden-sm-and-down" >
-            <el-row :gutter="10" type="flex" >
-              <el-col :span="6">
-                <el-input
-                  placeholder="請輸入藥局名稱"
-                  prefix-icon="el-icon-search"
-                  v-model="filter.Name">
-                </el-input>
-              </el-col>
-  
-              <el-col :span="6">
-                <el-input
-                  placeholder="請選擇地點"
-                  prefix-icon="el-icon-search"
-                  v-model="filter.Area"
-                  :disabled="isUseCurrentLocationQuery">
-                  <template slot="append"><el-button class="el-icon-map-location" @click="useCurrentLocation"></el-button></template>
-                </el-input>
-              </el-col>
-  
-              <el-col :span="3">
-                <el-checkbox v-model="filter.HaveAdultMask" label="成人口罩" border></el-checkbox>
-              </el-col>
+  <el-container>
+    <el-header>              
+      <label class="mainTitle">罩哪裡去<i class="el-icon-info el-icon--right" /> 
+        <div
+          id="maskInfoImg"
+          style="text-align: center;"
+        >
+          <img
+            src="../assets/img/MaskInfo.png"
+            style="width: 50%;object-fit: contain;"
+          >
+        </div> 
+      </label>                  
 
-              <el-col :span="3">
-                <el-checkbox v-model="filter.HaveChildMask" label="兒童口罩" border></el-checkbox>
-              </el-col>
+      
+    </el-header>
+    <el-main>
+      <template>        
+        <!-- PC   -->
+        <div class="hidden-sm-and-down">
+          <el-row
+            :gutter="10"
+            type="flex"
+          >
+            <el-col :span="6">
+              <el-input
+                v-model="filter.Name"
+                placeholder="請輸入藥局名稱"
+                prefix-icon="el-icon-search"
+              />
+            </el-col>
   
-            </el-row>
-          </div>
+            <el-col :span="6">
+              <el-input
+                v-model="filter.Area"
+                placeholder="請選擇地點"
+                prefix-icon="el-icon-search"
+                :disabled="isUseCurrentLocationQuery"
+              >
+                <template slot="append">
+                  <el-button
+                    class="el-icon-map-location"
+                    @click="useCurrentLocation"
+                  />
+                </template>
+              </el-input>
+            </el-col>
+  
+            <el-col :span="3">
+              <el-checkbox
+                v-model="filter.HaveAdultMask"
+                label="成人口罩"
+                border
+              />
+            </el-col>
 
-          <!-- Mobile -->
-          <div class="hidden-sm-and-up">
-            <el-row >
-              <el-col :span="24">
-                <el-input
-                  placeholder="請輸入藥局名稱"
-                  prefix-icon="el-icon-search"
-                  v-model="filter.Name">
-                </el-input>
-              </el-col>
-            </el-row>
+            <el-col :span="3">
+              <el-checkbox
+                v-model="filter.HaveChildMask"
+                label="兒童口罩"
+                border
+              />
+            </el-col>
+          </el-row>
+        </div>
+
+        <!-- Mobile -->
+        <div class="hidden-sm-and-up">
+          <el-row>
+            <el-col :span="24">
+              <el-input
+                v-model="filter.Name"
+                placeholder="請輸入藥局名稱"
+                prefix-icon="el-icon-search"
+              />
+            </el-col>
+          </el-row>
             
-            <el-row >
-              <el-col :span="24">
-                <el-input
-                  placeholder="請選擇地點"
-                  prefix-icon="el-icon-search"
-                  v-model="filter.Area"
-                  :disabled="isUseCurrentLocationQuery">
-                  <template slot="append"><el-button class="el-icon-map-location" @click="useCurrentLocation"></el-button></template>
-                </el-input>
-              </el-col>
-            </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-input
+                v-model="filter.Area"
+                placeholder="請選擇地點"
+                prefix-icon="el-icon-search"
+                :disabled="isUseCurrentLocationQuery"
+              >
+                <template slot="append">
+                  <el-button
+                    class="el-icon-map-location"
+                    @click="useCurrentLocation"
+                  />
+                </template>
+              </el-input>
+            </el-col>
+          </el-row>
               
-            <el-row :gutter="10">
-              <el-col :span="10">
-                <el-checkbox v-model="filter.HaveAdultMask" label="成人口罩" border></el-checkbox>
-              </el-col>
-              <el-col :span="10">
-                <el-checkbox v-model="filter.HaveChildMask" label="兒童口罩" border></el-checkbox>
-              </el-col>              
-            </el-row>
-          </div>
+          <el-row :gutter="10">
+            <el-col :span="10">
+              <el-checkbox
+                v-model="filter.HaveAdultMask"
+                label="成人口罩"
+                border
+              />
+            </el-col>
+            <el-col :span="10">
+              <el-checkbox
+                v-model="filter.HaveChildMask"
+                label="兒童口罩"
+                border
+              />
+            </el-col>              
+          </el-row>
+        </div>
           
 
-          <el-row :gutter="20" >
-            <el-button :disabled="isLoading" type="primary" icon="el-icon-search" round @click="query" >查詢</el-button>
-          </el-row>
-        </template>
+        <el-row :gutter="20">
+          <el-button
+            :disabled="isLoading"
+            type="primary"
+            icon="el-icon-search"
+            round
+            @click="query"
+          >
+            查詢
+          </el-button>
+        </el-row>
+      </template>
 
-        <!-- 分隔線 -->
-        <el-divider></el-divider>        
+      <!-- 分隔線 -->
+      <el-divider />        
 
-        <div style="text-align: left;">
-          <span v-show="isUseCurrentLocationQuery">顯示距離當前位置{{ distanceKM }}公里藥局</span>
-        </div>
+      <div style="text-align: left;">
+        <span v-show="isUseCurrentLocationQuery">顯示距離當前位置{{ distanceKM }}公里藥局</span>
+      </div>
         
-        <div           
-          v-loading="isLoading"                  
-          v-infinite-scroll="showmore"
-          infinite-scroll-disabled="disabledLoadingMoreData"
-        >            
-            <InfoCard
-              v-for="(item, index) in listDataSource"               
-              :key="index"
-              :currentLocation="currentLocation"
-              :info="item"                     
-            >
-            </InfoCard>                    
-        </div>
+      <div           
+        v-loading="isLoading"                  
+        v-infinite-scroll="showmore"
+        infinite-scroll-disabled="disabledLoadingMoreData"
+      >            
+        <InfoCard
+          v-for="(item, index) in listDataSource"               
+          :key="index"
+          :current-location="currentLocation"
+          :info="item"                     
+        />                    
+      </div>
 
-        <el-backtop target=".el-main"></el-backtop>
-      </el-main>
-      <!-- <el-footer>Footer</el-footer> -->      
-
-    </el-container>  
+      <el-backtop target=".el-main" />
+    </el-main>
+    <!-- <el-footer>Footer</el-footer> -->
+  </el-container>  
 </template>
 
 <script>
   import InfoCard from '../components/InfoCard.vue'
   import distance from '../lib/distance'
-
+ 
   const axios = require('axios')
   export default {
     name: 'Index',
@@ -138,7 +182,8 @@
         isUseCurrentLocationQuery: false,
         nearestCount: 10,
         distanceKM: 3, // 3km
-        dialogVisible: false
+        dialogVisible: false,
+        // deferredPrompt: this.VueInstall.BeforeInstallPromptEvent
       }
     },
     computed: {
@@ -164,6 +209,22 @@
       this.init()      
     },
     methods: {
+      // promptInstall() {
+      //   debugger
+      //   // Show the prompt:
+      //   this.deferredPrompt.prompt();
+  
+      //   // Wait for the user to respond to the prompt:
+      //   this.deferredPrompt.userChoice.then(choiceResult => {
+      //     if (choiceResult.outcome === "accepted") {
+      //       console.log("User accepted the install prompt");
+      //     } else {
+      //       console.log("User dismissed the install prompt");
+      //     }
+  
+      //     this.deferredPrompt = null;
+      //   });
+      // } ,
       init() {
         let self = this        
 

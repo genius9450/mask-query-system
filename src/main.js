@@ -5,6 +5,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import VueGeolocation from 'vue-browser-geolocation'
 import 'element-ui/lib/theme-chalk/display.css'
+import './registerServiceWorker'
 
 Vue.config.productionTip = false
 
