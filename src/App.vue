@@ -11,6 +11,11 @@ export default {
   name: 'App',
   components: {
     Index
+  },
+  created() {
+    window.addEventListener('beforeinstallprompt', (event) => {
+      console.log('beforeinstallprompt', event)      
+    })
   }
 }
 </script>
