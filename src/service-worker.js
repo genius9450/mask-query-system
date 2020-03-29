@@ -1,16 +1,16 @@
-window.addEventListener('install', (event) => {
+self.addEventListener('install', (event) => {
   console.log('Version installing', event)
 })
 
-window.addEventListener('activate', (event) => {
+self.addEventListener('activate', (event) => {
   console.log('Version now ready to handle', event)
 })
 
-window.addEventListener("fetch", event => {  
+self.addEventListener("fetch", event => {  
   console.log('fetch', event.request)
 })
 
-window.addEventListener('load', () => {
+self.addEventListener('load', () => {
   if (navigator.standalone) {
     console.log('Launched: Installed (iOS)')
   } else if (matchMedia('(display-mode: standalone)').matches) {

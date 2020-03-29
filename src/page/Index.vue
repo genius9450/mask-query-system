@@ -12,7 +12,6 @@
           >
         </div> 
       </label>
-      <link rel="manifest" href="../../public/manifest.json">
     </el-header>
     <el-main>
       <template>        
