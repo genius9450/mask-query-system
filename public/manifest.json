@@ -1,20 +1,7 @@
 {
-  "short_name": "Weather",
-  "name": "Weather: Do I need an umbrella?",
-  "description": "Weather forecast information",
-  "icons": [
-    {
-      "src": "/images/icons-192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/images/icons-512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ],
-  "start_url": "/?source=pwa",
+  "short_name": "maskQuery",
+  "name": "mask-query-system",  
+  "start_url": "https://genius9450.github.io/mask-query-system/",
   "background_color": "#3367D6",
   "display": "standalone",
   "scope": "/",
