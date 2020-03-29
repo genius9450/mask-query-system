@@ -1,9 +1,11 @@
 {
+  "name": "mask-query-system",
   "short_name": "maskQuery",
-  "name": "mask-query-system",  
-  "start_url": "https://genius9450.github.io/mask-query-system/",
-  "background_color": "#3367D6",
+  "theme_color": "#2196f3",
+  "background_color": "#2196f3",
   "display": "standalone",
-  "scope": "/",
-  "theme_color": "#3367D6"
+  "Scope": "/",
+  "start_url": "/https://genius9450.github.io/mask-query-system/",
+  "icons": null,
+  "splash_pages": null
 }
